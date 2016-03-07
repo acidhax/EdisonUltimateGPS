@@ -1,5 +1,5 @@
 var EventEmitter = require('events').EventEmitter;
-
+var util = require('util');
 function UltimateGPS (serialPort) {
 	this.serialPort = serialPort;
 	this.serialPort.on("data", this._onData.bind(this));
