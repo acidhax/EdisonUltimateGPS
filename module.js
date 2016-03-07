@@ -47,10 +47,10 @@ UltimateGPS.prototype._parseGPRMC = function(data_arr) {
 UltimateGPS.prototype.sendCommand = function(command) {
 	this.serialPort.write(command+"\n");
 };
-UltimateGPS.prototype.startLogger = function() {
+UltimateGPS.prototype.startLogging = function() {
 	this.sendCommand(UltimateGPS.PMTK_LOCUS_STARTLOG);
 };
-UltimateGPS.prototype.stopLogger = function() {
+UltimateGPS.prototype.stopLogging = function() {
 	this.sendCommand(UltimateGPS.PMTK_LOCUS_STOPLOG);
 };
 UltimateGPS.prototype.queryLogger = function() {

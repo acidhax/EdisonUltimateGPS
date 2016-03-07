@@ -33,6 +33,9 @@ serialPort.open(function (error) {
   } else {
     console.log('open');
     var test = new gps(serialPort);
+    setTimeout(function () {
+      test.startLogging();
+    }, 1000);
  //    serialPort.on('data', function(data) {
  //      if (lastValue) {
 	// //return;
