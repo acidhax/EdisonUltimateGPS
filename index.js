@@ -3,7 +3,7 @@ var port = "/dev/ttyMFD1";
 var serialPort = new SerialPort(port, {
   baudrate: 9600
 }, false);
-
+var gps = require('./module');
 var parse_gprmc = function(data_arr){
   var gps_time = parseFloat(data_arr[1]);
   var gps_time_int = parseInt(data_arr[1]);
@@ -32,23 +32,24 @@ serialPort.open(function (error) {
     console.log('Failed to open: '+error);
   } else {
     console.log('open');
-    serialPort.on('data', function(data) {
-      if (lastValue) {
-	//return;
-      }
-      var in_data = String(data);
-      //console.log(in_data);
-      if( in_data.indexOf(',') === -1 ){
-        console.log("error data");
-        return;
-      }
-      var in_data_array = in_data.split('\r\n');
-      for (var i = 0;i<in_data_array.length;i++){
-        if(in_data_array[i].indexOf('$GPRMC') !== -1){
-          parse_gprmc(in_data_array[i].split(','));
-        }
-      }
-    });
+    var test = new gps(serialPort);
+ //    serialPort.on('data', function(data) {
+ //      if (lastValue) {
+	// //return;
+ //      }
+ //      var in_data = String(data);
+ //      //console.log(in_data);
+ //      if( in_data.indexOf(',') === -1 ){
+ //        console.log("error data");
+ //        return;
+ //      }
+ //      var in_data_array = in_data.split('\r\n');
+ //      for (var i = 0;i<in_data_array.length;i++){
+ //        if(in_data_array[i].indexOf('$GPRMC') !== -1){
+ //          parse_gprmc(in_data_array[i].split(','));
+ //        }
+ //      }
+ //    });
   }
 });
 
@@ -56,31 +57,31 @@ serialPort.open(function (error) {
 var m = require('mraa'); //require mraa
 console.log('MRAA Version: ' + m.getVersion()); //write the mraa version to the console
 
-var myDigitalPin = new m.Gpio(32); //setup digital read on pin 5
-myDigitalPin.dir(m.DIR_OUT); //set the gpio direction to output
-var isOn = true;
+// var myDigitalPin = new m.Gpio(32); //setup digital read on pin 5
+// myDigitalPin.dir(m.DIR_OUT); //set the gpio direction to output
+// var isOn = true;
 
-function loops() {
-    console.log("TURNING GPS", isOn);
-    myDigitalPin.write(isOn?1:0); //set the digital pin to high (1)
-    //isOn=!isOn;
-}
-loops();
-setInterval(loops, 240000);
+// function loops() {
+//     console.log("TURNING GPS", isOn);
+//     myDigitalPin.write(isOn?1:0); //set the digital pin to high (1)
+//     //isOn=!isOn;
+// }
+// loops();
+// setInterval(loops, 240000);
 
 
-var inPin = new m.Gpio(31);
-inPin.dir(m.DIR_IN);
-var lastValue = 0;
-function loop2() {
-    var value = inPin.read();
-    if (lastValue != value && value) {
-        lastValue = value;
+// var inPin = new m.Gpio(31);
+// inPin.dir(m.DIR_IN);
+// var lastValue = 0;
+// function loop2() {
+//     var value = inPin.read();
+//     if (lastValue != value && value) {
+//         lastValue = value;
 
-        console.info("Searching for Satellites...");
-    }
-}
+//         console.info("Searching for Satellites...");
+//     }
+// }
 
-loop2();
+// loop2();
 
-setInterval(loop2, 200);
+// setInterval(loop2, 200);
