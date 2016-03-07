@@ -1,7 +1,10 @@
+var EventEmitter = require('events').EventEmitter;
+
 function UltimateGPS (serialPort) {
 	this.serialPort = serialPort;
 	this.serialPort.on("data", this._onData.bind(this));
 }
+util.inherits(UltimateGPS, EventEmitter);
 UltimateGPS.prototype._onData = function(data) {
 	var in_data = String(data);
 	if( in_data.indexOf(',') === -1 ){
