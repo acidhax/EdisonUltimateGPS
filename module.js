@@ -19,6 +19,8 @@ UltimateGPS.prototype._onData = function(data) {
 		} else if (item.indexOf(UltimateGPS.Commands.PMTK_LOCUS_STARTSTOPACK)) {
 			// Start/Stop data logging ACK
 			console.log("ACK", item);
+		} else {
+			console.log("item", item);
 		}
 	}
 };
